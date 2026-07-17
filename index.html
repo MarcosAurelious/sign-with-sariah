@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign with Sariah | Notary Public</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF9F4;
+    --paper:#FDF2ED;
+    --blush:#F6DAD2;
+    --rose:#E4A99B;
+    --rose-deep:#C97F70;
+    --gold:#B79355;
+    --gold-light:#D9BE8A;
+    --gold-dark:#8F7038;
+    --ink:#2E241F;
+    --ink-soft:#5B4C43;
+    --line: rgba(46,36,31,0.12);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--gold-light); color:var(--ink); }
+
+  .display{ font-family:'Fraunces', serif; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 36px;
+    background:rgba(255,249,244,0);
+    transition:background .4s ease, box-shadow .4s ease, padding .4s ease;
+  }
+  header.scrolled{
+    background:rgba(255,249,244,0.92);
+    backdrop-filter:blur(10px);
+    box-shadow:0 1px 0 var(--line);
+    padding:14px 36px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:1.18rem;
+    letter-spacing:.2px;
+  }
+  .brand .seal-mark{
+    width:30px; height:30px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold) 60%, var(--gold-dark) 100%);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--cream);
+    font-family:'Fraunces', serif;
+    font-style:normal;
+    font-weight:600;
+    font-size:.78rem;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 1px 3px rgba(143,112,56,.4);
+  }
+  nav.links{
+    display:flex; align-items:center; gap:34px;
+    font-size:.86rem;
+    font-weight:600;
+    letter-spacing:.02em;
+    color:var(--ink-soft);
+  }
+  nav.links a{ position:relative; padding:4px 0; transition:color .25s ease;}
+  nav.links a::after{
+    content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px;
+    background:var(--gold-dark); transition:width .3s ease;
+  }
+  nav.links a:hover{ color:var(--ink); }
+  nav.links a:hover::after{ width:100%; }
+
+  .ig-pill{
+    display:flex; align-items:center; gap:8px;
+    border:1px solid var(--gold);
+    color:var(--gold-dark);
+    padding:8px 16px 8px 12px;
+    border-radius:999px;
+    font-size:.82rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    transition: background .3s ease, color .3s ease, transform .25s ease;
+  }
+  .ig-pill:hover{ background:var(--gold); color:#fff; transform:translateY(-1px); }
+  .ig-pill svg{ width:16px; height:16px; }
+
+  .menu-toggle{ display:none; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    height:100svh;
+    min-height:560px;
+    width:100%;
+    overflow:hidden;
+    display:flex;
+    align-items:flex-end;
+  }
+  .hero video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    filter:saturate(0.92) brightness(0.98);
+  }
+  .hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(46,32,26,.18) 0%, rgba(46,32,26,.05) 30%, rgba(46,32,26,.55) 100%),
+      linear-gradient(0deg, rgba(233,167,148,.28), rgba(233,167,148,0) 45%);
+    z-index:1;
+  }
+  .hero-content{
+    position:relative; z-index:2;
+    width:100%;
+    padding:0 36px 64px;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:18px;
+  }
+  .hero-eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-size:.78rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:var(--gold-light);
+  }
+  .hero-eyebrow .dash{ width:26px; height:1px; background:var(--gold-light); }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(3rem, 9vw, 6.4rem);
+    line-height:0.98;
+    letter-spacing:-.01em;
+    text-shadow:0 6px 30px rgba(0,0,0,.18);
+  }
+  .hero p.sub{
+    max-width:480px;
+    font-size:1.02rem;
+    line-height:1.6;
+    color:rgba(255,255,255,.88);
+    font-weight:500;
+  }
+  .hero-cta{
+    display:flex; gap:14px; flex-wrap:wrap; margin-top:6px;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 26px;
+    border-radius:999px;
+    font-size:.86rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    transition:transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
+  }
+  .btn-gold{
+    background:linear-gradient(135deg, var(--gold-light), var(--gold) 60%, var(--gold-dark));
+    color:#fff;
+    box-shadow:0 8px 22px rgba(143,112,56,.35);
+  }
+  .btn-gold:hover{ transform:translateY(-2px); box-shadow:0 12px 28px rgba(143,112,56,.45); }
+  .btn-ghost{
+    border:1.5px solid rgba(255,255,255,.6);
+    color:#fff;
+    backdrop-filter:blur(2px);
+  }
+  .btn-ghost:hover{ background:rgba(255,255,255,.14); }
+
+  .scroll-cue{
+    position:absolute; right:36px; bottom:28px; z-index:2;
+    writing-mode:vertical-rl;
+    color:rgba(255,255,255,.75);
+    font-size:.72rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+  }
+  .scroll-cue .line{ width:1px; height:52px; background:rgba(255,255,255,.55); position:relative; overflow:hidden;}
+  .scroll-cue .line::after{
+    content:''; position:absolute; top:-100%; left:0; width:100%; height:100%;
+    background:var(--gold-light);
+    animation:cue 2.4s ease-in-out infinite;
+  }
+  @keyframes cue{ 0%{top:-100%;} 60%{top:100%;} 100%{top:100%;} }
+
+  /* ---------- section basics ---------- */
+  section{ position:relative; padding:120px 0; }
+  .eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-size:.76rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--gold-dark);
+    margin-bottom:18px;
+  }
+  .eyebrow .dash{ width:26px; height:1px; background:var(--gold-dark); }
+  h2.section-title{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(2.1rem, 4vw, 3.1rem);
+    line-height:1.08;
+    letter-spacing:-.01em;
+    max-width:640px;
+  }
+  h2.section-title em{ font-style:italic; color:var(--rose-deep); }
+  p.lede{
+    max-width:520px;
+    color:var(--ink-soft);
+    font-size:1.02rem;
+    line-height:1.7;
+    margin-top:18px;
+  }
+
+  /* ---------- about ---------- */
+  .about{ background:var(--paper); }
+  .about-grid{
+    display:grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap:64px;
+    align-items:center;
+  }
+  .about-photo{
+    position:relative;
+  }
+  .about-photo .frame{
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 26px 60px -20px rgba(46,36,31,.35);
+    border:1px solid var(--line);
+  }
+  .about-photo .frame img{
+    width:100%; height:560px; object-fit:cover; object-position:top center;
+  }
+  .about-photo .seal-badge{
+    position:absolute;
+    bottom:-26px; left:-26px;
+    width:118px; height:118px;
+    border-radius:50%;
+    background:var(--cream);
+    box-shadow:0 14px 30px -10px rgba(46,36,31,.3);
+    display:flex; align-items:center; justify-content:center;
+    border:1px dashed var(--gold);
+  }
+  .seal-badge-inner{
+    width:96px; height:96px;
+    border-radius:50%;
+    border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:.72rem;
+    color:var(--gold-dark);
+    line-height:1.3;
+    letter-spacing:.03em;
+    padding:8px;
+  }
+
+  .about-text .signature-line{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.5rem;
+    color:var(--rose-deep);
+    margin-top:26px;
+  }
+  .about-text p.lede{ margin-top:20px; }
+  .credentials{
+    display:flex; flex-wrap:wrap; gap:12px;
+    margin-top:30px;
+  }
+  .credentials span{
+    font-size:.78rem;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:var(--gold-dark);
+    background:#fff;
+    border:1px solid var(--line);
+    padding:9px 16px;
+    border-radius:999px;
+  }
+
+  /* ---------- services ---------- */
+  .services{ background:var(--cream); }
+  .services-head{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap;
+    margin-bottom:64px;
+  }
+  .service-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+  }
+  .service-card{
+    background:var(--cream);
+    padding:40px 32px;
+    display:flex; flex-direction:column; gap:16px;
+    transition:background .35s ease;
+    position:relative;
+  }
+  .service-card:hover{ background:var(--paper); }
+  .service-num{
+    width:46px; height:46px;
+    border-radius:50%;
+    border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    color:var(--gold-dark);
+    font-size:1.1rem;
+    transition:transform .4s ease, background .4s ease, color .4s ease;
+  }
+  .service-card:hover .service-num{
+    background:var(--gold);
+    color:#fff;
+    transform:rotate(-8deg) scale(1.06);
+  }
+  .service-card h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.28rem;
+  }
+  .service-card p{
+    color:var(--ink-soft);
+    font-size:.92rem;
+    line-height:1.65;
+  }
+
+  /* ---------- process ---------- */
+  .process{ background:var(--blush); }
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:36px;
+    margin-top:64px;
+  }
+  .step{ position:relative; padding-top:34px; }
+  .step::before{
+    content:attr(data-step);
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:2.4rem;
+    color:var(--rose-deep);
+    opacity:.55;
+    position:absolute;
+    top:-10px; left:0;
+  }
+  .step h4{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:1.08rem;
+    margin-bottom:10px;
+  }
+  .step p{ color:var(--ink-soft); font-size:.9rem; line-height:1.6; }
+  .step-line{
+    position:absolute; top:8px; left:44px; right:-36px; height:1px;
+    background:repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 12px);
+  }
+  .step:last-child .step-line{ display:none; }
+
+  /* ---------- gallery / illustration section ---------- */
+  .brand-strip{
+    background:var(--cream);
+    padding:0;
+  }
+  .brand-strip-grid{
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    align-items:stretch;
+  }
+  .brand-strip-art{
+    background:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    padding:48px;
+  }
+  .brand-strip-art img{
+    border-radius:16px;
+    box-shadow:0 30px 60px -24px rgba(46,36,31,.35);
+    max-height:560px; width:auto; object-fit:cover;
+  }
+  .brand-strip-copy{
+    padding:80px 64px;
+    display:flex; flex-direction:column; justify-content:center;
+    gap:20px;
+  }
+  .quote-mark{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:4rem;
+    color:var(--gold);
+    line-height:.6;
+  }
+  .brand-strip-copy blockquote{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.7rem;
+    line-height:1.4;
+    color:var(--ink);
+    max-width:440px;
+  }
+  .brand-strip-copy .attrib{
+    font-size:.82rem;
+    font-weight:700;
+    letter-spacing:.03em;
+    color:var(--gold-dark);
+  }
+
+  /* ---------- CTA / booking ---------- */
+  .cta{
+    background:linear-gradient(155deg, var(--rose-deep), var(--rose) 55%, var(--gold) 130%);
+    color:#fff;
+    text-align:center;
+    padding:120px 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .cta::before{
+    content:'';
+    position:absolute; inset:0;
+    background:radial-gradient(circle at 20% 20%, rgba(255,255,255,.16), transparent 45%),
+               radial-gradient(circle at 85% 80%, rgba(255,255,255,.12), transparent 40%);
+  }
+  .cta .wrap{ position:relative; }
+  .cta .eyebrow{ color:rgba(255,255,255,.85); justify-content:center; }
+  .cta .eyebrow .dash{ background:rgba(255,255,255,.7); }
+  .cta h2{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(2.2rem,5vw,3.6rem);
+    max-width:680px;
+    margin:0 auto 22px;
+  }
+  .cta p{
+    max-width:480px;
+    margin:0 auto 36px;
+    color:rgba(255,255,255,.9);
+    line-height:1.6;
+  }
+  .cta .btn-gold{ background:#fff; color:var(--rose-deep); box-shadow:0 10px 30px rgba(46,36,31,.25); }
+  .cta .btn-gold:hover{ color:var(--gold-dark); }
+
+  /* ---------- footer ---------- */
+  footer{
+    background:var(--ink);
+    color:rgba(255,249,244,.72);
+    padding:64px 0 32px;
+  }
+  .footer-top{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap;
+    padding-bottom:44px;
+    border-bottom:1px solid rgba(255,249,244,.14);
+  }
+  .footer-brand{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-size:1.5rem;
+    color:#fff;
+  }
+  .footer-brand span{ display:block; font-family:'Manrope',sans-serif; font-style:normal; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-light); margin-top:8px; }
+  .footer-ig{
+    display:inline-flex; align-items:center; gap:10px;
+    border:1px solid rgba(255,249,244,.3);
+    padding:12px 20px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:.9rem;
+    transition:border-color .3s ease, background .3s ease;
+  }
+  .footer-ig:hover{ border-color:var(--gold-light); background:rgba(217,190,138,.12); }
+  .footer-ig svg{ width:18px; height:18px; }
+  .footer-bottom{
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    padding-top:26px;
+    font-size:.78rem;
+    color:rgba(255,249,244,.45);
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px){
+    nav.links{ display:none; }
+    .about-grid{ grid-template-columns:1fr; gap:80px; }
+    .about-photo .frame img{ height:420px; }
+    .service-grid{ grid-template-columns:1fr; }
+    .process-grid{ grid-template-columns:1fr 1fr; row-gap:48px; }
+    .step-line{ display:none; }
+    .brand-strip-grid{ grid-template-columns:1fr; }
+    .brand-strip-copy{ padding:56px 32px; }
+    .brand-strip-art{ padding:32px; }
+  }
+  @media (max-width: 560px){
+    .wrap{ padding:0 20px; }
+    header{ padding:16px 20px; }
+    .hero-content{ padding:0 20px 48px; }
+    section{ padding:80px 0; }
+    .process-grid{ grid-template-columns:1fr; }
+    .about-photo .seal-badge{ width:92px; height:92px; left:-14px; bottom:-18px; }
+    .seal-badge-inner{ width:76px; height:76px; font-size:.62rem; }
+    .footer-top{ flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <a href="#top" class="brand">
+    <span class="seal-mark">S</span>
+    Sign with Sariah
+  </a>
+  <nav class="links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#process">How it works</a>
+    <a href="#book">Book</a>
+  </nav>
+  <a class="ig-pill" href="https://instagram.com/signwithsariah" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1"/></svg>
+    @signwithsariah
+  </a>
+</header>
+
+<section class="hero" id="top">
+  <video autoplay muted loop playsinline poster="assets/photo.jpg">
+    <source src="assets/hero.mp4" type="video/mp4">
+  </video>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="dash"></span> Notary Public &amp; Loan Signing Agent</div>
+    <h1 class="display">Sign with<br>Sariah</h1>
+    <p class="sub">Every signature deserves a steady hand. I bring the notary desk to you — warm, precise, and fully licensed — so your documents are sealed right, the first time.</p>
+    <div class="hero-cta">
+      <a href="#book" class="btn btn-gold">Book an appointment</a>
+      <a href="#services" class="btn btn-ghost">See services</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="line"></span> Scroll</div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="about-photo reveal">
+      <div class="frame">
+        <img src="assets/photo.jpg" alt="Sariah, notary public">
+      </div>
+      <div class="seal-badge">
+        <div class="seal-badge-inner">Notary<br>Public<br>&#9825;</div>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <div class="eyebrow"><span class="dash"></span> About Sariah</div>
+      <h2 class="section-title">Detail-obsessed, <em>document by document.</em></h2>
+      <p class="lede">Sariah is a commissioned notary public who treats every closing, affidavit, and power of attorney like it's the only one on the desk that day. No rushed stamps, no confusing jargon — just a friendly professional making sure your paperwork holds up.</p>
+      <p class="signature-line">— Sariah</p>
+      <div class="credentials">
+        <span>State Commissioned</span>
+        <span>Loan Signing Certified</span>
+        <span>Mobile &amp; By Appointment</span>
+        <span>Bilingual Friendly</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="wrap">
+    <div class="services-head reveal">
+      <div>
+        <div class="eyebrow"><span class="dash"></span> Services</div>
+        <h2 class="section-title">One notary, <em>every kind</em> of signature.</h2>
+      </div>
+      <p class="lede">Pick the service that fits — or ask, and Sariah will point you the right way.</p>
+    </div>
+    <div class="service-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3>General Notarization</h3>
+        <p>Affidavits, powers of attorney, consent forms, and everyday documents — notarized correctly and on time.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3>Loan Signings</h3>
+        <p>Refinances, purchases, and HELOCs handled with a calm, experienced hand at the closing table.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3>Mobile Notary</h3>
+        <p>Home, office, hospital, or coffee shop — Sariah travels to wherever your signing needs to happen.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <h3>Real Estate Docs</h3>
+        <p>Deeds, trusts, and title paperwork notarized with the precision real estate transactions demand.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <h3>After-Hours Signings</h3>
+        <p>Evening and weekend appointments available for signings that can't wait for business hours.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <h3>Apostille Guidance</h3>
+        <p>Help preparing documents that need an apostille for use outside the United States.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow"><span class="dash"></span> How it works</div>
+      <h2 class="section-title">From request to <em>ready to file.</em></h2>
+    </div>
+    <div class="process-grid reveal">
+      <div class="step" data-step="01">
+        <div class="step-line"></div>
+        <h4>Reach out</h4>
+        <p>Message Sariah with your document type, timing, and location.</p>
+      </div>
+      <div class="step" data-step="02">
+        <div class="step-line"></div>
+        <h4>Confirm details</h4>
+        <p>Get a quick appointment time and a list of what to have ready.</p>
+      </div>
+      <div class="step" data-step="03">
+        <div class="step-line"></div>
+        <h4>Sign together</h4>
+        <p>Sariah verifies ID, witnesses the signature, and applies the seal.</p>
+      </div>
+      <div class="step" data-step="04">
+        <h4>Done and dated</h4>
+        <p>You walk away with a properly notarized, ready-to-file document.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="brand-strip">
+  <div class="brand-strip-grid">
+    <div class="brand-strip-art reveal">
+      <img src="assets/illustration.png" alt="Illustration of Sariah at her notary desk">
+    </div>
+    <div class="brand-strip-copy reveal">
+      <div class="quote-mark">&ldquo;</div>
+      <blockquote>I don't just stamp documents — I make sure people leave feeling like it was handled right.</blockquote>
+      <p class="attrib">SARIAH · NOTARY PUBLIC</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="book">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dash"></span> Let's get it signed</div>
+    <h2 class="display">Your next signature is one message away.</h2>
+    <p>Tell Sariah what needs notarizing and where — she'll take care of the rest, with a smile and a steady stamp.</p>
+    <a class="btn btn-gold" href="https://instagram.com/signwithsariah" target="_blank" rel="noopener">
+      DM on Instagram &nbsp;@signwithsariah
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">Sign with Sariah<span>Notary Public · Loan Signing Agent</span></div>
+      <a class="footer-ig" href="https://instagram.com/signwithsariah" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1"/></svg>
+        @signwithsariah
+      </a>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Sign with Sariah. All rights reserved.</span>
+      <span>Commissioned Notary Public</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 24);
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('is-visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
